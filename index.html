@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Event Registration</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+    header { background: #004080; color: #fff; text-align: center; padding: 60px 20px; }
+    .container { max-width: 800px; margin: 40px auto; padding: 0 20px; }
+    form { display: flex; flex-direction: column; gap: 15px; }
+    input, textarea { padding: 12px; font-size: 1em; border: 1px solid #ccc; border-radius: 4px; }
+    button { padding: 15px; font-size: 1.1em; background: #0066cc; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
+    button:hover { background: #005bb5; }
+    footer { text-align: center; padding: 20px; background: #f0f0f0; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Annual Tech Conference 2025</h1>
+    <p>Join us for a day of insightful talks & workshops</p>
+  </header>
+
+  <div class="container">
+    <h2>Register Now</h2>
+    <form action="register.php" method="POST">
+      <input name="name" type="text" placeholder="Full Name" required />
+      <input name="email" type="email" placeholder="Email Address" required />
+      <textarea name="message" placeholder="Your Message (Optional)" rows="4"></textarea>
+      <button type="submit">Submit Registration</button>
+    </form>
+  </div>
+
+  <footer>
+    &copy; 2025 Tech Conference. All rights reserved.
+  </footer>
+</body>
+</html>
