@@ -1,47 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Simple To-Do List</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Event Registration</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 40px; max-width: 400px; margin: auto; }
-    ul { list-style: none; padding: 0; }
-    li { margin-top: 10px; }
-    .done { text-decoration: line-through; color: #888; }
-    button { margin-left: 10px; }
+    * {
+      margin: 0; padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    body {
+      background-color: #fff;
+      color: #333;
+    }
+    header {
+      background-image: url('https://static.wixstatic.com/media/84770f_6e012e3b57204802a3c07b37f0298a91~mv2.jpg/v1/fill/w_980,h_539,al_c,q_85,usm_0.66_1.00_0.01/84770f_6e012e3b57204802a3c07b37f0298a91~mv2.webp');
+      background-size: cover;
+      background-position: center;
+      height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 3em;
+      text-shadow: 2px 2px 5px #000;
+    }
+
+    .section {
+      padding: 40px 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .section h2 {
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: #444;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      background-color: #1e90ff;
+      color: white;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #006ad1;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9em;
+      background-color: #f4f4f4;
+    }
   </style>
 </head>
 <body>
-  <h2>To-Do List</h2>
-  <form id="todo-form">
-    <input id="todo-input" type="text" placeholder="Add a task..." required />
-    <button type="submit">Add</button>
-  </form>
-  <ul id="todo-list"></ul>
 
-  <script>
-    const form = document.getElementById('todo-form');
-    const input = document.getElementById('todo-input');
-    const list = document.getElementById('todo-list');
+  <header>
+    <h1>Annual Tech Conference 2025</h1>
+  </header>
 
-    form.onsubmit = function(e) {
-      e.preventDefault();
-      const text = input.value.trim();
-      if (!text) return;
-      const li = document.createElement('li');
-      const span = document.createElement('span');
-      span.textContent = text;
-      span.onclick = () => span.classList.toggle('done');
-      li.appendChild(span);
+  <div class="section">
+    <h2>About the Event</h2>
+    <p>Join us for an exciting day filled with keynotes, networking, and hands-on workshops. Whether you're a student or a professional, this is your chance to engage with tech leaders and innovators.</p>
+  </div>
 
-      const btn = document.createElement('button');
-      btn.textContent = '❌';
-      btn.onclick = () => li.remove();
-      li.appendChild(btn);
+  <div class="section">
+    <h2>Register Now</h2>
+    <form action="#" method="post">
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" required/>
+      </div>
 
-      list.appendChild(li);
-      input.value = '';
-    };
-  </script>
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required/>
+      </div>
+
+      <div class="form-group">
+        <label for="message">Your Message (Optional)</label>
+        <textarea id="message" name="message" rows="4"></textarea>
+      </div>
+
+      <button type="submit">Submit Registration</button>
+    </form>
+  </div>
+
+  <footer>
+    &copy; 2025 Annual Tech Conference. All rights reserved.
+  </footer>
+
 </body>
 </html>
