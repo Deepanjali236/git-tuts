@@ -1,0 +1,14 @@
+:: STEP 1: Make sure you’re in your repo folder
+cd "C:\Users\hp\OneDrive\Desktop\Git-tuts"
+
+:: STEP 2: Fetch and merge changes from GitHub (main branch)
+git pull origin main --allow-unrelated-histories
+
+:: STEP 3: Add your new local changes (frontend or backend)
+git add .
+
+:: STEP 4: Commit your local changes
+git commit -m "Merged remote changes and added frontend/backend updates"
+
+:: STEP 5: Push the merged and updated code back to GitHub
+git push origin main

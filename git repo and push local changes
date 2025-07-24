@@ -1,0 +1,20 @@
+:: STEP 1: Go to your project folder (replace with your actual path)
+cd "C:\Users\hp\OneDrive\Desktop\Git-tuts"
+
+:: STEP 2: Initialize the current folder as a Git repository
+git init
+
+:: STEP 3: Add only the specific HTML files you want to track
+git add code_1.html frontend.html
+
+:: STEP 4: Commit the changes with a clear message
+git commit -m "Initial commit with only code_1.html and frontend.html"
+
+:: STEP 5: Connect your local repo to your GitHub repository (replace with your real URL)
+git remote add origin https://github.com/Deepanjali236/Git-tuts.git
+
+:: STEP 6: Rename the branch to 'main' (optional if it's already 'main')
+git branch -M main
+
+:: STEP 7: Push your committed changes to GitHub, forcefully replacing anything there
+git push -u origin main --force
