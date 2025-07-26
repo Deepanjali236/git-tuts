@@ -1,18 +1,19 @@
 <?php
+// Include database connection
+include 'db_connection.php'; // Make sure to create this file for DB connection
+
 // Set response type to JSON
 header('Content-Type: application/json');
 
 // Read JSON input sent via fetch
 $input = file_get_contents("php://input");
-
-// Try decoding JSON
 $data = json_decode($input);
 
-// Validate JSON structure
-if (!$data || !isset($data->name) || !isset($data->email)) {
+// Validate input
+if (!$data || !isset($data->razorpay_payment_id) || !isset($data->name) || !isset($data->email)) {
     echo json_encode([
         "success" => false,
-        "message" => "Invalid input. Please provide both name and email."
+        "message" => "Invalid input."
     ]);
     exit;
 }
@@ -20,24 +21,22 @@ if (!$data || !isset($data->name) || !isset($data->email)) {
 // Sanitize input
 $name = htmlspecialchars(trim($data->name));
 $email = htmlspecialchars(trim($data->email));
+$razorpay_payment_id = htmlspecialchars(trim($data->razorpay_payment_id));
 
-// Optional: Validate email format
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+// Optional: Save payment details to the database
+$sql = "INSERT INTO payments (name, email, payment_id) VALUES ('$name', '$email', '$razorpay_payment_id')";
+if (mysqli_query($conn, $sql)) {
+    // Send confirmation email (use mail() function or a library like PHPMailer)
+    // mail($email, "Payment Successful", "Your payment was successful. Payment ID: $razorpay_payment_id");
+
+    echo json_encode([
+        "success" => true,
+        "message" => "Payment successful! Thank you, $name."
+    ]);
+} else {
     echo json_encode([
         "success" => false,
-        "message" => "Invalid email format."
+        "message" => "Database error: " . mysqli_error($conn)
     ]);
-    exit;
 }
-
-// Optional: Save to a file (e.g., data.txt)
-$file = fopen("data.txt", "a"); // Open file in append mode
-fwrite($file, "Name: $name, Email: $email\n");
-fclose($file);
-
-// Respond to frontend
-echo json_encode([
-    "success" => true,
-    "message" => "Hi $name! Your email ($email) was received successfully."
-]);
 ?>

@@ -2,55 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Registration Form</title>
+  <title>Registration Form with Payment</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 40px;
-      background-color: #f4f4f4;
-    }
-    h2 {
-      color: #333;
-    }
-    form {
-      background-color: #fff;
-      padding: 20px;
-      max-width: 400px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    input {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    button {
-      padding: 10px 20px;
-      background-color: #4285f4;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #2a6ad7;
-    }
-    #response {
-      margin-top: 15px;
-    }
+    /* Existing styles */
   </style>
 </head>
 <body>
-  <h2>Register</h2>
+  <h2>Register and Make Payment</h2>
   <form id="registerForm">
     <input type="text" name="name" placeholder="Your name" required>
     <input type="email" name="email" placeholder="Your email" required>
-    <button type="submit">Submit</button>
+    <button type="submit">Register</button>
   </form>
+  <button id="paymentButton" style="display:none;">Pay Now</button>
   <p id="response" style="font-weight: bold;"></p>
 
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <script>
     document.getElementById("registerForm").addEventListener("submit", function (e) {
       e.preventDefault();
@@ -73,13 +40,57 @@
           const resBox = document.getElementById("response");
           resBox.style.color = data.success ? "green" : "red";
           resBox.innerText = data.message;
+
+          if (data.success) {
+            // Show payment button
+            document.getElementById("paymentButton").style.display = "block";
+          }
         })
         .catch(err => {
           document.getElementById("response").style.color = "red";
-          document.getElementById("response").innerText = "Error: Failed to fetch. Make sure Apache is running and the file path is correct.";
+          document.getElementById("response").innerText = "Error: Failed to fetch.";
           console.error("Fetch error:", err);
         });
-    })
+    });
+
+    document.getElementById("paymentButton").addEventListener("click", function () {
+      const options = {
+        key: "YOUR_RAZORPAY_KEY_ID", // Replace with your Razorpay Key ID
+        amount: 50000, // Amount in paise (50000 paise = ₹500)
+        currency: "INR",
+        name: "Your Company Name",
+        description: "Test Transaction",
+        image: "https://your-logo-url.com/logo.png",
+        handler: function (response) {
+          // Send payment details to the backend
+          fetch("payment.php", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              razorpay_payment_id: response.razorpay_payment_id,
+              name: document.querySelector("input[name='name']").value,
+              email: document.querySelector("input[name='email']").value
+            })
+          })
+          .then(res => res.json())
+          .then(data => {
+            alert(data.message);
+          });
+        },
+        prefill: {
+          name: document.querySelector("input[name='name']").value,
+          email: document.querySelector("input[name='email']").value
+        },
+        theme: {
+          color: "#F37254"
+        }
+      };
+
+      const rzp = new Razorpay(options);
+      rzp.open();
+    });
   </script>
 </body>
 </html>
