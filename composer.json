@@ -1,0 +1,14 @@
+{
+    "name": "event-registration/form",
+    "description": "Simple event registration with email confirmation",
+    "require": {
+        "phpmailer/phpmailer": "^6.10"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Anjali Karthi",
+            "email": "anjalikarthi02@gmail.com"
+        }
+    ]
+}

@@ -1,90 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Registration Form with Payment</title>
+  <meta charset="UTF-8" />
+  <title>Register and Pay</title>
   <style>
-    /* Existing styles */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: #fff;
+      padding: 30px 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #333;
+    }
+
+    input, textarea, button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #response {
+      margin-top: 15px;
+      font-weight: bold;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
-  <h2>Register and Make Payment</h2>
-  <form id="registerForm">
-    <input type="text" name="name" placeholder="Your name" required>
-    <input type="email" name="email" placeholder="Your email" required>
-    <button type="submit">Register</button>
-  </form>
-  <button id="paymentButton" style="display:none;">Pay Now</button>
-  <p id="response" style="font-weight: bold;"></p>
+  <div class="container">
+    <h2>Register and Pay</h2>
+    <form id="registerForm">
+      <input type="text" name="name" placeholder="Your name" required />
+      <input type="email" name="email" placeholder="Your email" required />
+      <textarea name="message" placeholder="Tell something..." required></textarea>
+      <button type="submit">Register</button>
+    </form>
+
+    <button id="paymentButton" style="display: none;">Pay Now</button>
+    <p id="response"></p>
+  </div>
 
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <script>
-    document.getElementById("registerForm").addEventListener("submit", function (e) {
+    const form = document.getElementById("registerForm");
+    const paymentButton = document.getElementById("paymentButton");
+    const responseBox = document.getElementById("response");
+
+    form.addEventListener("submit", function (e) {
       e.preventDefault();
 
-      const name = document.querySelector("input[name='name']").value;
-      const email = document.querySelector("input[name='email']").value;
+      const name = form.name.value;
+      const email = form.email.value;
+      const message = form.message.value;
 
       fetch("register.php", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ name, email })
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, message })
       })
-        .then(res => {
-          if (!res.ok) throw new Error("Server error");
-          return res.json();
-        })
+        .then(res => res.json())
         .then(data => {
-          const resBox = document.getElementById("response");
-          resBox.style.color = data.success ? "green" : "red";
-          resBox.innerText = data.message;
+          responseBox.style.color = data.success ? "green" : "red";
+          responseBox.innerText = data.message;
 
           if (data.success) {
-            // Show payment button
-            document.getElementById("paymentButton").style.display = "block";
+            paymentButton.style.display = "block";
           }
         })
-        .catch(err => {
-          document.getElementById("response").style.color = "red";
-          document.getElementById("response").innerText = "Error: Failed to fetch.";
-          console.error("Fetch error:", err);
+        .catch(() => {
+          responseBox.style.color = "red";
+          responseBox.innerText = "Error submitting form.";
         });
     });
 
-    document.getElementById("paymentButton").addEventListener("click", function () {
+    paymentButton.addEventListener("click", function () {
+      const name = form.name.value;
+      const email = form.email.value;
+
       const options = {
-        key: "YOUR_RAZORPAY_KEY_ID", // Replace with your Razorpay Key ID
-        amount: 50000, // Amount in paise (50000 paise = ₹500)
+        key: "YOUR_RAZORPAY_KEY_ID", // 🔁 Replace with your Razorpay key
+        amount: 50000, // ₹500
         currency: "INR",
-        name: "Your Company Name",
-        description: "Test Transaction",
-        image: "https://your-logo-url.com/logo.png",
+        name: "Cuty Payments",
+        description: "Event Fee",
         handler: function (response) {
-          // Send payment details to the backend
           fetch("payment.php", {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               razorpay_payment_id: response.razorpay_payment_id,
-              name: document.querySelector("input[name='name']").value,
-              email: document.querySelector("input[name='email']").value
+              name: name,
+              email: email
             })
           })
-          .then(res => res.json())
-          .then(data => {
-            alert(data.message);
-          });
+            .then(res => res.json())
+            .then(data => {
+              alert(data.message);
+              responseBox.innerText = data.message;
+            });
         },
         prefill: {
-          name: document.querySelector("input[name='name']").value,
-          email: document.querySelector("input[name='email']").value
-        },
-        theme: {
-          color: "#F37254"
+          name: name,
+          email: email
         }
       };
 
