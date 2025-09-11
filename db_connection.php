@@ -1,13 +1,14 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "registration_db";
+$servername = "localhost"; // XAMPP's default server name
+$username = "root";        // XAMPP default username
+$password = "";            // XAMPP default password is empty
+$dbname = "crudoperation"; // Your local DB name in phpMyAdmin
 
-$conn = new mysqli($servername, $username, $password, $database);
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-// Handle error clearly
+// Check connection
 if ($conn->connect_error) {
-  die(json_encode(["success" => false, "message" => "DB connection failed: " . $conn->connect_error]));
+    die("Connection failed: " . $conn->connect_error);
 }
 ?>

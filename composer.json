@@ -2,7 +2,8 @@
     "name": "event-registration/form",
     "description": "Simple event registration with email confirmation",
     "require": {
-        "phpmailer/phpmailer": "^6.10"
+        "phpmailer/phpmailer": "^6.10",
+        "razorpay/razorpay": "^2.9"
     },
     "license": "MIT",
     "authors": [

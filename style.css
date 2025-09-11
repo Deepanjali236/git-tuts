@@ -1,0 +1,686 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* ----------------------------
+   GLOBAL STYLES
+---------------------------- */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow: auto;
+  background-color: #f5f5f5;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* ----------------------------
+   NAVBAR STYLES
+---------------------------- */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 2cm;
+  background-color: #45b4c0; /* Solid color */
+  padding: 0 40px 0 20px;
+  overflow-x: auto;
+  white-space: nowrap;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 999;
+  box-shadow: 0 2px 5px rgba(7, 90, 81, 0.942);
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  margin-right: 20px;
+  font-size: 16px;
+  padding: 0 20px;
+  border-bottom: 3px solid transparent;
+}
+
+.navbar a:hover {
+  text-decoration: underline;
+}
+
+.navbar a.active {
+  border-bottom: 3px solid yellow;
+  font-weight: bold;
+}
+
+
+/* ----------------------------
+   USER INITIAL & LOGOUT BUTTON
+---------------------------- */
+.user-initial {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 20px;
+  background-color: white;
+  color: #45b4c0;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  line-height: 35px;
+  font-size: 18px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  cursor: default;
+}
+
+.logout-button {
+  margin-left: 20px;
+  background-color: #f44336;
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  font-size: 14px;
+  border-radius: 5px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.logout-button:hover {
+  background-color: #d32f2f;
+}
+
+
+/* ----------------------------
+   SECTION STYLES
+---------------------------- */
+section {
+  padding: 60px 20px;
+  box-sizing: border-box;
+  background-color: #fff;
+  margin-bottom: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+}
+.section {
+  height: 100vh;
+  padding-top: 2.0cm;
+}
+
+/* Home Section Styling */
+.home-section {
+  background-image: url('image/2.jpeg'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: rgb(252, 248, 248);
+}
+
+.home-content h1 {
+  font-size: 100px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  font-family: 'Dancing Script', cursive;
+}
+
+.home-content p {
+  font-size: 28px;
+  font-weight: 500;
+  font-family: 'Arial', sans-serif;
+}
+#agenda {
+  padding: 80px 20px;
+  background: linear-gradient(45deg, #1e3c72, #2a5298, #1e3c72, #2a5298); /* Replace with your preferred colors */
+  background-size: 400% 400%;
+  animation: animatedGradient 15s ease infinite;
+  color: #fff;
+  text-align: center;
+  border-radius: 25px;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+
+/* ✨ Rotating Glow Effect */
+#agenda::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.08), transparent 70%);
+  animation: rotateGlow 30s linear infinite;
+  z-index: 0;
+}
+
+#agenda * {
+  position: relative;
+  z-index: 1;
+}
+
+/*  Agenda Box */
+.agenda {
+  background-color: rgba(15, 20, 40, 0.9); /* darker, more modern */
+  color: white;
+  padding: 40px;
+  border-radius: 20px;
+  margin: 30px auto 10px auto;
+  max-width: 1000px;
+  min-height: 550px;
+  font-family: 'Segoe UI', sans-serif;
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.05);
+}
+
+/* Agenda Heading */
+.agenda h2 {
+  font-size: 42px;
+  margin-bottom: 25px;
+  padding-bottom: 10px;
+  text-align: center;
+  font-weight: bold;
+ background: linear-gradient(90deg, #e0f7fa, #b2ebf2, #80deea);
+ background-clip: text;
+ -webkit-background-clip: text;
+ -webkit-text-fill-color: transparent;
+
+  animation: textGlow 5s ease-in-out infinite alternate;
+}
+
+/* 🧩 Agenda Items */
+.agenda-item {
+  display: flex;
+  align-items: center;
+  padding: 16px 0;
+  border-top: 1px solid #444a66;
+}
+
+.agenda-item:first-child {
+  border-top: none;
+}
+
+.time {
+  width: 120px;
+  font-weight: bold;
+  font-size: 22px;
+  color: #82d4f2;
+}
+
+.event {
+  font-size: 22px;
+  color: #cfd8dc;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* 💡 Text glow animation */
+@keyframes textGlow {
+  0% {
+    text-shadow: 0 0 10px #b2ebf2, 0 0 20px #4dd0e1, 0 0 30px #00acc1;
+  }
+  100% {
+    text-shadow: 0 0 15px #e0f7fa, 0 0 25px #26c6da, 0 0 35px #00bcd4;
+  }
+}
+
+/* 🎨 Gradient Background Animation */
+@keyframes animatedGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* 🔄 Glow Rotate Animation */
+@keyframes rotateGlow {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+#speakers {
+  background: linear-gradient(to bottom, rgba(70, 135, 255, 0.9), rgba(40, 100, 220, 0.9));
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 80px 20px;
+  color: #fff;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+#speakers h2 {
+  text-align: center;
+  font-family: 'Dancing Script', cursive;
+  font-size: 3rem;
+  margin-bottom: 50px;
+  color: #190a70;
+}
+
+.speakers-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 20px;
+}
+
+.speaker-card {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  background-color: #1c0439;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.speaker-card img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.speaker-info {
+  text-align: left;
+}
+
+.speaker-info h3 {
+  margin: 0;
+  font-size: 22px;
+  color: #edeaea;
+}
+
+.speaker-info p {
+  margin: 5px 0 0;
+  font-size: 16px;
+  color: #f7f7f7;
+}
+
+/* Responsive Fix */
+@media (max-width: 768px) {
+  .speaker-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .speaker-card img {
+    margin: 0 0 20px 0;
+  }
+
+  .speaker-info {
+    text-align: center;
+  }
+}
+
+
+#venue {
+  background: linear-gradient(to bottom, rgba(116, 120, 225, 0.8), rgba(70, 135, 255, 0.8));
+  padding: 60px 20px;
+  background-color: #f5f5f5;
+  text-align: center;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+#venue h2 {
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.map-container iframe {
+  width: 100%;
+  max-width: 1000px;
+  height: 450px;
+  border-radius: 12px;
+  display: block;
+  margin: 20px auto;
+}
+
+
+
+.contact-section {
+  background-color: #0c1835;
+  color: white;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.contact-section h2 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.contact-section p {
+  font-size: 16px;
+  margin-bottom: 30px;
+  color: #ccc;
+}
+
+.contact-form {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.contact-form input[type="email"] {
+  padding: 12px 15px;
+  width: 300px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+}
+
+.contact-form button {
+  padding: 12px 25px;
+  background-color: #7f00ff; /* Vibrant purple */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Optional: Hover effect */
+.contact-form button:hover {
+  background-color: #5a00b2; /* Darker shade for hover */
+  transform: scale(1.03);    /* Slight pop effect */
+}
+
+
+.contact-form button:hover {
+  background-color: #a04bff;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.social-icons a {
+  color: white;
+  font-size: 20px;
+  transition: color 0.3s;
+}
+
+.social-icons a:hover {
+  color: #7f00ff;
+}
+
+
+
+
+/* ----------------------------
+   SECTION HIGHLIGHT (when scrolling)
+---------------------------- */
+.section:target {
+  outline: none;
+}
+
+.section:target h2 {
+  color: #45b4c0;
+}
+
+
+/* ----------------------------
+   FORM BOXES (Signup & Login)
+---------------------------- */
+.signup-box,
+.login-box {
+  background: white;
+  width: 400px;
+  padding: 30px;
+  margin: 100px auto;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.signup-box h2,
+.login-box h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.signup-box label,
+.login-box label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.signup-box input,
+.signup-box select,
+.login-box input,
+.login-box select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.signup-box input:-webkit-autofill,
+.login-box input:-webkit-autofill {
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+.signup-box button,
+.login-box button {
+  background-color: #00bfa5; /* Aqua green */
+  color: white;
+  border: none;
+  padding: 12px;
+  width: 100%;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.signup-box button:hover,
+.login-box button:hover {
+  background-color: #009e89;
+}
+/* ----------------------------
+   Responsive Design for Mobile
+---------------------------- */
+@media screen and (max-width: 480px) {
+  .signup-box,
+  .login-box {
+    width: 90%;          /* Adjust width for small screens */
+    margin: 50px auto;   /* Smaller top/bottom margin */
+    padding: 20px;       /* Slightly less padding */
+  }
+}
+
+
+/* ----------------------------
+   LOGOUT PAGE BOX
+---------------------------- */
+.logout-box {
+  background: white;
+  width: 400px;
+  padding: 30px;
+  margin: 150px auto;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.logout-box h2 {
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.logout-box .button {
+  background-color: #00bfa5;
+  color: white;
+  padding: 10px 25px;
+  text-decoration: none;
+  font-size: 16px;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+.logout-box .button:hover {
+  background-color: #009e89;
+}
+/* Payment Button Container */
+.pay-container {
+  text-align: center;
+  margin-top: 60px;
+  padding: 40px;
+}
+
+#payBtn {
+  padding: 14px 32px;
+  background-color: #00bfa5;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#payBtn:hover {
+  background-color: #009e89;
+  transform: scale(1.05);
+}
+
+#payBtn:active {
+  transform: scale(0.98);
+}
+
+.pay-box {
+  text-align: center;
+  margin-top: 100px;
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 10px;
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.pay-box h2 {
+  margin-bottom: 20px;
+}
+
+#payBtn {
+  padding: 12px 25px;
+  background-color: #00bfa5;
+  color: white;
+  border: none;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#payBtn:hover {
+  background-color: #009e89;
+}
+/* ------------------------------
+   Responsive Styles for Mobile
+------------------------------ */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .navbar a {
+    display: block;
+    padding: 10px 0;
+    font-size: 16px;
+  }
+
+  .user-initial {
+    margin-top: 10px;
+  }
+
+  .home-content h1 {
+    font-size: 24px;
+    text-align: center;
+  }
+
+  .home-content p {
+    font-size: 16px;
+    text-align: center;
+  }
+
+  .agenda {
+    padding: 10px;
+  }
+
+  .agenda-item {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+.speakers-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.speaker-card {
+  width: 30%;
+  min-width: 250px;
+}
+
+
+  .contact-form {
+    flex-direction: column;
+  }
+
+  .contact-form input,
+  .contact-form button {
+    width: 100%;
+    margin: 5px 0;
+  }
+
+  .social-icons {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  iframe {
+    height: 300px;
+  }
+}
+.home-content {
+  padding: 0 10px;
+}
+
+

@@ -1,22 +1,47 @@
 <?php
-header('Content-Type: application/json');
-$data = json_decode(file_get_contents("php://input"));
+require_once("vendor/autoload.php");
+use Razorpay\Api\Api;
 
-if (!$data || !isset($data->razorpay_payment_id)) {
-  echo json_encode(["success" => false, "message" => "Invalid payment details."]);
-  exit;
-}
+$api_key = "rzp_test_qyoMPOYrHgXw3E";
+$api_secret = "uGlJX4dct5JkKqPBaCfwaNX7";
 
-$id = $data->razorpay_payment_id;
-$name = htmlspecialchars(trim($data->name));
-$email = htmlspecialchars(trim($data->email));
+$api = new Api($api_key, $api_secret);
 
-file_put_contents("json/payments.json", json_encode([
-  "id" => $id,
-  "name" => $name,
-  "email" => $email,
-  "timestamp" => date("Y-m-d H:i:s")
-], JSON_PRETTY_PRINT));
+// Step 1: Create order
+$orderData = [
+    'receipt'         => 'ORD_' . time(),
+    'amount'          => 100, 
+    'currency'        => 'INR',
+    'payment_capture' => 1
+];
+$order = $api->order->create($orderData);
+$order_id = $order['id'];
 
-echo json_encode(["success" => true, "message" => "Payment recorded successfully."]);
-?>
+// Step 2: Prepare checkout data
+$data = [
+    "key"        => $api_key,
+    "amount"     => $orderData['amount'],
+    "currency"   => $orderData['currency'],
+    "name"       => "Acme Corp",
+    "description"=> "Test transaction",
+    "image"      => "https://cdn.razorpay.com/logos/GhRQcyean79PqE_medium.png",
+    "prefill"    => [
+        "name"    => "Test User",
+        "email"   => "test@example.com",
+        "contact" => "9999999999",
+    ],
+    "notes"      => [
+        "address" => "Razorpay Corporate Office",
+        "merchant_order_id" => "12312321",
+    ],
+    "theme"      => [
+        "color" => "#3399cc"
+    ],
+    "order_id"   => $order_id,
+];
+
+$json = json_encode($data);
+
+// Step 3: Load Razorpay checkout template
+$checkout = "automatic"; // or "manual"
+require("checkout/{$checkout}.php");
